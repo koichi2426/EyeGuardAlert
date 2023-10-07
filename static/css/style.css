@@ -1,0 +1,196 @@
+/*
+Loading
+*/
+.loading {
+    background-color: #eee;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+}
+.loading-screen {
+    background-color: hsl(97, 35%, 82%);
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    translate: 0 100vh; /*画面外の↓に配置*/
+}
+.loading > p {
+    font-size: 2rem;
+    font-family: 'Oswald', sans-serif;
+}
+
+/*
+header
+*/
+.header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    position: fixed;
+    z-index: 1;
+    top: 10px;
+    left: 0;
+    
+    
+}
+.header-nav{
+    margin: 0;
+}
+.header-navlist{
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header-navitem > a{
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 2px solid transparent; /*透明から色がつく*/
+    transition: border-color .25s;
+}
+
+.header-navitem > a:hover{
+    border-bottom: 2px solid #ccc;
+}
+.header-title{
+    color: #333;
+    text-decoration: none;
+    left: 0;
+}
+
+@media screen and (max-width: 768px){
+    .header{
+        font-size: 10px;
+    }
+}
+
+/*
+section
+*/
+.section{
+    padding: 30px 15px;
+    background-color: #eee;
+}
+
+.section.section-secoundary{
+    background: hsl(97, 35%, 82%);
+}
+
+.section.section-secoundary > video{
+    display: block;
+    margin: 10px auto 20px;
+
+}
+
+.section-headline{
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 0 0 40px;
+}
+
+@media screen and (max-width: 768px){
+    .section{
+        padding: 20px 10px;
+    }
+
+    .section-headline{
+        font-size: 30px;
+        margin: 0 0 20px;
+    }
+}
+
+/*
+about
+*/
+.about{
+    margin: 0; 
+    display: flex;/*aboutの子要素に対して横並び*/
+}
+
+.about-caption{
+    padding-left: 15px;
+}
+.about-headline{
+    margin: 0 0 25px 20px;
+    font-size: 30px;
+}
+
+.about-description{
+    margin: 0 20px;
+    font-size: 1.2rem;
+    font-family: serif;
+}
+
+@media screen and (max-width: 768px){
+    .about{
+        display: block;
+    }
+    .about-image{
+        max-width: 100%;
+        margin-bottom: 20px ;
+    }
+
+    .about-headline{
+        font-size: 20px;
+        text-align: center;
+        margin: 25px;
+    }
+
+    .about-description{
+        margin: 20px;
+        text-align: center;
+    }
+}
+
+/*
+Start
+*/
+.camera-image{
+    display: block;
+    margin: 10px auto 20px;
+}
+
+#runPythonButton {
+    color: #fff;
+    background: #403632;
+    border: 1px solid #403632;
+    text-decoration: none;
+    padding: 1rem;
+    display: block; /* インラインブロックからブロック要素に変更 */
+    margin: 0 auto ; /* 左右のマージンを自動で中央配置 */
+    width: fit-content;
+    transition: .4s;
+    box-shadow: 5px 5px 0 #bbb; /*x,y,分散させる具合*/
+    border-radius: 5px;
+}
+
+#runPythonButton:hover{
+    box-shadow: 0 0 0 #bbb;
+}
+
+.video-message{
+    font-family: Georgia, serif;;
+    font-size: min(10vw, 4rem);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px){
+    .camera-image{
+        max-width: 100%;
+        margin-bottom: 20px ;
+    }
+
+    .video-image{
+        max-width: 100%;
+        margin-bottom: 20px ;
+    }
+}
