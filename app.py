@@ -22,7 +22,7 @@ global last_blink_time
 last_blink_time = 0
 global last_calculate_time
 last_calculate_time = 0
-_INTERVAL = 300
+_INTERVAL = 60
 
 class BlinkCounter(BaseModel, strict=True):
     blink_log: list[int]
@@ -33,15 +33,23 @@ log = BlinkCounter(
     interval_to_before=[]
 )
 # 基準となるまばたき回数を数える時間の長さ(ナノ秒)
-_OBSERVE_NORMAL_TIME = 1.8e+11
+_OBSERVE_NORMAL_TIME = 60 + time.perf_counter()
 global normal_dispersion
 normal_dispersion = 0
 
+global Tolerance
+Tolerance = 100
+
 def check_blink(logger:BlinkCounter):
     global last_calculate_time
+    global Tolerance
     last_calculate_time = time.perf_counter()
-    if normal_dispersion < variance(logger.interval_to_before):
-        popup.popup()
+    if logger.blink_log and logger.interval_to_before:
+        print("check")
+        print("normal variance : " + str(normal_dispersion))
+        print("now variance : " + str(variance(logger.interval_to_before)))
+        if Tolerance < abs(variance(logger.interval_to_before) - normal_dispersion):
+            popup.popup()
         
 
 app = Flask(__name__)
@@ -50,6 +58,7 @@ def run_camera():
     global normal_dispersion
     global last_blink_time
     global last_calculate_time
+    global Tolerance
     
     # VideoCaptureインスタンス化
     # カメラを抽出
@@ -96,20 +105,23 @@ def run_camera():
     def on_blinklate_trackbar(val):
         global blinklate
         blinklate = val
+    def on_Tolerance_trackbar(val: int):
+        global Tolerance
+        Tolerance = val
 
     # OpenCVウィンドウを作成
     cv2.namedWindow('Blink Detection')
     
     # トラックバーを作成し、初期値を設定
     cv2.createTrackbar('Blink Late', 'Blink Detection', blinklate, 100, on_blinklate_trackbar)
+    cv2.createTrackbar('Tolerance', 'Blink Detection', Tolerance, 1000, on_Tolerance_trackbar)
 
     before_frame = 0
     current_frame = 0
+    before_time = 0
     # 無限ループ
     while True:
-            
         
-        before_time = 0
         if time.perf_counter() - before_time > _INTERVAL:
             before_time = time.perf_counter()
             print(time.perf_counter())
@@ -120,6 +132,7 @@ def run_camera():
                 log.interval_to_before.clear()
                 print("OVSERVE_NORMAL_DESCRIPTION is ended")
             if time.perf_counter() - last_calculate_time > _INTERVAL:
+                print("try to check blink")
                 check_blink(logger=log)
                 
             
