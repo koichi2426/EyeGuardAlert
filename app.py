@@ -18,7 +18,9 @@ __Left = 130
 __Right = 243
 
 # 前回の時間計測時の時間
+global last_blink_time
 last_blink_time = 0
+global last_calculate_time
 last_calculate_time = 0
 _INTERVAL = 300
 
@@ -30,12 +32,14 @@ log = BlinkCounter(
     blink_log=[],
     interval_to_before=[]
 )
-# 基準となるまばたき回数を数える時間の長さ
+# 基準となるまばたき回数を数える時間の長さ(ナノ秒)
 _OBSERVE_NORMAL_TIME = 1.8e+11
 global normal_dispersion
 normal_dispersion = 0
 
 def check_blink(logger:BlinkCounter):
+    global last_calculate_time
+    last_calculate_time = time.perf_counter()
     if normal_dispersion < variance(logger.interval_to_before):
         popup.popup()
         
@@ -44,6 +48,8 @@ app = Flask(__name__)
 
 def run_camera():
     global normal_dispersion
+    global last_blink_time
+    global last_calculate_time
     
     # VideoCaptureインスタンス化
     # カメラを抽出
@@ -97,13 +103,22 @@ def run_camera():
     # トラックバーを作成し、初期値を設定
     cv2.createTrackbar('Blink Late', 'Blink Detection', blinklate, 100, on_blinklate_trackbar)
 
+    before_frame = 0
+    current_frame = 0
     # 無限ループ
     while True:
+            
+        
+        before_time = 0
+        if time.perf_counter() - before_time > _INTERVAL:
+            before_time = time.perf_counter()
+            print(time.perf_counter())
         if _OBSERVE_NORMAL_TIME < time.perf_counter():
             if not normal_dispersion:
                 normal_dispersion = variance(log.interval_to_before)
                 log.blink_log.clear()
                 log.interval_to_before.clear()
+                print("OVSERVE_NORMAL_DESCRIPTION is ended")
             if time.perf_counter() - last_calculate_time > _INTERVAL:
                 check_blink(logger=log)
                 
@@ -155,6 +170,7 @@ def run_camera():
 
             # まばたきの検出とカウント
             if ratioAvg < blinklate and counter == 0:
+                print("blinked")
                 time_now = time.perf_counter()
                 log.blink_log.append(time_now)
                 log.interval_to_before.append(
@@ -164,8 +180,6 @@ def run_camera():
                 color = color1
                 counter = 1
                 last_blink_time = time_now
-                if time_now < _OBSERVE_NORMAL_TIME:
-                    normal_blink_counter+=1
                     
 
 
