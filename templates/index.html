@@ -28,6 +28,9 @@
                     <a href="#" class="header-About">About</a>
                 </li>
                 <li class="header-navitem">
+                    <a href="#Parameter-section" class="header-Parameter">Parameter</a>
+                </li>
+                <li class="header-navitem">
                     <a href="#start-section" class="header-Start">Start</a>
                 </li>
             </ul>
@@ -57,14 +60,16 @@
     </section>
 
 
-    <section class="section section-secoundary">
+    <section class="section section-secoundary" id="Parameter-section">
         <h1 class="section-headline">Parameter</h1>
         <ul class="grid grid-col-1">
             <div class="box">
                 <li class="grid-item">
                     <dl class="parameter">
                         <dt class="parameter-headline">1.Blink late</dt>
-                        <dd class="parameter-desprection">Blink lateは瞬きを判定するライン。<br> この値を下回ると、瞬きと判定されます。</dd>
+                        <dd class="parameter-desprection">Blink lateは瞬きを判定するライン。<br> この値を下回ると、瞬きと判定されます。<br><br>
+                        ユーザーはこの値を変更する事が出来、<br>判定基準を変更する事が可能です。<br><br>
+                    値を大きくする -> 瞬きの感度が上がる。<br>値を小さくする -> 瞬きの感度が下がる。</dd>
                     </dl>
                 </li>
         </div>
@@ -72,7 +77,10 @@
             <li class="grid-item">
                 <dl class="parameter">
                     <dt class="parameter-headline">2.Tolerance</dt>
-                    <dd class="parameter-desprection">最初、直近の標準偏差の差の絶対値が<br>Tolerance以上の場合、休憩を促します。</dd>
+                    <dd class="parameter-desprection">最初、直近の標準偏差の差の絶対値が<br>Tolerance以上の場合、休憩を促します。<br><br>
+                    ユーザーはこの値を変更する事が出来、<br>休息の推奨しやすさを変更する事が可能。<br><br>
+                    値を大きくする -> 疲労を検知しにくくなる。<br>値を小さくする -> 疲労を検知しやすくなる。<br>
+                </dd>
                 </dl>
             </li>
         </div>

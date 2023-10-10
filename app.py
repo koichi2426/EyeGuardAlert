@@ -22,7 +22,8 @@ global last_blink_time
 last_blink_time = 0
 global last_calculate_time
 last_calculate_time = 0
-_INTERVAL = 60
+#_INTERVAL単位で瞬きの頻度の標準偏差を算出する（以下の場合は10分）
+_INTERVAL = 600
 
 class BlinkCounter(BaseModel, strict=True):
     blink_log: list[int]
@@ -33,12 +34,19 @@ log = BlinkCounter(
     interval_to_before=[]
 )
 # 基準となるまばたき回数を数える時間の長さ(ナノ秒)
-_OBSERVE_NORMAL_TIME = 60 + time.perf_counter()
+
+# 以下の場合は600秒(10分)
+_OBSERVE_NORMAL_TIME = 600 + time.perf_counter()
+
+# 以下の場合は300秒(5分)
+#_OBSERVE_NORMAL_TIME = 300 + time.perf_counter()
+
+#以下の場合は60秒
+#_OBSERVE_NORMAL_TIME = 60 + time.perf_counter()
 global normal_dispersion
 normal_dispersion = 0
 
-global Tolerance
-Tolerance = 100
+
 
 def check_blink(logger:BlinkCounter):
     global last_calculate_time
@@ -100,6 +108,10 @@ def run_camera():
     # 初期のblinklate値
     global blinklate
     blinklate = 34
+
+    # 初期のTolerance値
+    global Tolerance
+    Tolerance = 100
 
     # ブリンク遅延を調整するトラックバーのコールバック関数
     def on_blinklate_trackbar(val):
