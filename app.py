@@ -203,7 +203,7 @@ def run_camera():
                     color = color2
 
             # まばたき回数を画面に表示
-            cvzone.putTextRect(img, f'Blink Count: {blinkCounter}', (50,100), colorR=color)
+            cvzone.putTextRect(img, f'Count: {blinkCounter}', (50,100), colorR=color)
 
             # グラフをアップデートし、画像をリサイズ
             imgPlot = plotY.update(ratioAvg, color)

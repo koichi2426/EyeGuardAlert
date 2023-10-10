@@ -44,8 +44,10 @@
 
                     ・このアプリは、MediaPipe Irisの技術を活用して、ユーザーの目の状態をリアルタイムで監視します。<br><br>
 
-                    ・ユーザーのまばたきの回数から分析し、長時間の画面作業やデジタル眼精疲労の兆候を警告します。
-                    また、定期的な休憩を促すリマインダーも提供します。<br><br>
+                    ・ユーザーのまばたきの回数から分析し、長時間の画面作業やデジタル眼精疲労の兆候を警告し、
+                    休憩を促すリマインダーを提供します。<br><br>
+
+                    ・分析には、瞬きの時間的間隔の標準偏差（以下、標準偏差）を利用します。<br><br>
 
                     ・Start分野の"camera"ボタンを押すとwebカメラによる監視を開始します。<br><br>
                     
@@ -54,7 +56,31 @@
         </figure>
     </section>
 
-    <section class="section section-secoundary" id="start-section">
+
+    <section class="section section-secoundary">
+        <h1 class="section-headline">Parameter</h1>
+        <ul class="grid grid-col-1">
+            <div class="box">
+                <li class="grid-item">
+                    <dl class="parameter">
+                        <dt class="parameter-headline">1.Blink late</dt>
+                        <dd class="parameter-desprection">Blink lateは瞬きを判定するライン。<br> この値を下回ると、瞬きと判定されます。</dd>
+                    </dl>
+                </li>
+        </div>
+        <div class="box">
+            <li class="grid-item">
+                <dl class="parameter">
+                    <dt class="parameter-headline">2.Tolerance</dt>
+                    <dd class="parameter-desprection">最初、直近の標準偏差の差の絶対値が<br>Tolerance以上の場合、休憩を促します。</dd>
+                </dl>
+            </li>
+        </div>
+        </ul>
+    </section>
+
+
+    <section class="section" id="start-section">
         <h1 class="section-headline">Start</h1>
         <img class="camera-image"  src="../static/material/before.jpg" alt="before.jpg">
         <div class="video-message"></div>
