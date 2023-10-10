@@ -101,7 +101,7 @@ section
     background: hsl(97, 35%, 82%);
 }
 
-.section.section-secoundary > video{
+.section > video{
     display: block;
     margin: 10px auto 20px;
 
