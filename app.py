@@ -253,7 +253,7 @@ def run_camera():
 def index():
     return render_template('index.html')
 
-@app.route('/run_script', methods=['POST'])
+@app.route('/run_script')
 def run_script():
     # ボタンがクリックされたときに実行するコードをここに書きます
     run_camera()
